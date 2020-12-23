@@ -1,11 +1,42 @@
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import classnames from 'classnames'
+import { HeaderAutocomplete } from './Autocomplete'
 
-export const AppHeader: React.FunctionComponent<{}> = () => {
+interface HeaderProps {
+  disableSearch?: boolean
+}
+
+export const AppHeader: React.FC<HeaderProps> = (props) => {
+  const [sticky, setSticky] = useState(false)
+
+  useEffect(() => {
+    handleStickyHeader()
+    return () => window.removeEventListener('scroll', handleStickyHeader)
+  }, [])
+
+  const handleStickyHeader = () => {
+    setSticky(false)
+  }
+
   return (
     <header className="app-header">
-      <nav className="px-4 bg-white flex items-center justify-between">
-        <div className="">
-          <img src="" alt="Logo" />
+      <nav
+        className={classnames('px-4 flex items-center justify-between', {
+          'fixed top-0 left-0 right-0': true,
+          'bg-white shadow-md': sticky, 
+        })}
+      >
+        <div className="flex items-center w-full max-w-lg">
+          <Link href="/">
+            <a className="flex items-center">
+              <img alt="Logo" src="/logo.svg" width={25} height={25} />
+              <span className="inline-block ml-2 font-semibold">TripFinder.</span>
+            </a>
+          </Link>
+          { !props.disableSearch && 
+            <HeaderAutocomplete />
+          }
         </div>
         <div className="flex items-center">
           <ul className="flex items-center">

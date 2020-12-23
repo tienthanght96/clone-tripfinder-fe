@@ -25,7 +25,7 @@ body {
 }
 
 .btn-text {
-  @apply px-6 py-2 text-gray-600 bg-white border border-transparent inline-block transition-all;
+  @apply px-6 py-2 text-gray-600 bg-transparent border border-transparent inline-block transition-all;
   @apply hover:text-teal-600;
 }
 
